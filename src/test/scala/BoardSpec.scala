@@ -1,8 +1,9 @@
 import com.seancheatham.chess.Board
 import com.seancheatham.chess._
-import org.scalatest.WordSpec
+import org.scalatest._
+import wordspec._
 
-class BoardSpec extends WordSpec {
+class BoardSpec extends AnyWordSpec {
 
   "A default chess board" can {
     "be generated" in {

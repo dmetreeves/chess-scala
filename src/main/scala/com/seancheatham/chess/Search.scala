@@ -1,5 +1,7 @@
 package com.seancheatham.chess
 
+import scala.collection.parallel.CollectionConverters._
+
 object Search {
 
   /**
@@ -333,7 +335,9 @@ object Search {
         // To assist with the "pruning" in alpha/beta pruning, sort the result
         // by the "weight" of the piece at the destination index.  Pieces
         // with higher weights will be searched first.
-        .sortBy(move => -board.pieces(move._2).weight)
+        //.toVector // have to convert view to the vector due to the fact that scala.collection.SeqView changing type to the scala.collection.View after 'filter' method applied and the method 'sortBy' becomes unavailable for the view
+        //.sortBy(move => -board.pieces(move._2).weight)
+
   }
 
 }

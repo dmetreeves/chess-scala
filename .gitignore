@@ -30,3 +30,8 @@ src_managed/
 project/boot/
 .history
 .cache
+
+/target/
+/project/target
+/project/project/target
+/.bsp

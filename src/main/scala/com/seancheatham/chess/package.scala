@@ -182,7 +182,7 @@ package object chess {
         case `BN` | `WN` => 3
         case `BR` | `WR` => 5
         case `BQ` | `WQ` => 9
-        case `BK` | `WK` => Double.MaxValue
+        case `BK` | `WK` => 22 // If you leave Double.MaxValue here, then Evaluate.apply will normally return not 0.0, but 11.0
       }
   }
 

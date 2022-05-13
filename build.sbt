@@ -1,9 +1,10 @@
 name := "chess"
 
-version := "1.0"
+version := "0.1.0"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.13.8"
 
-libraryDependencies += "org.scalactic" %% "scalactic" % "2.2.6"
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.6" % "test"
-libraryDependencies += "com.typesafe" % "config" % "1.3.0"
+libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.12"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.12" % "test"
+libraryDependencies += "com.typesafe" % "config" % "1.4.2"
+libraryDependencies += "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4"

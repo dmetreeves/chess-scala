@@ -29,7 +29,7 @@ object Evaluate {
           case `BP` =>
             -board.pieces(index).weight *
               (1 -
-                (Range(index % 10, 98, 10)
+                (Range.inclusive(index % 10, 98, 10)
                   .count(i => board.pieces(i) == BP) - 1) / 4
                 )
           case `BB` =>
@@ -41,7 +41,7 @@ object Evaluate {
           case `WP` =>
             board.pieces(index).weight *
               (1 -
-                (Range(index % 10, 98, 10)
+                (Range.inclusive(index % 10, 98, 10)
                   .count(i => board.pieces(i) == WP) - 1) / 4
                 )
           case `WB` =>

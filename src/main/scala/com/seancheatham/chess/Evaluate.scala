@@ -3,13 +3,13 @@ package com.seancheatham.chess
 object Evaluate {
 
   /**
-    * Evaluates the board in its current state.
-    *
-    * @param board The board to evaluate
-    * @return A Double value representing the "favorability" of a
-    *         particular side.  A negative value indicates that the BLACK side is favored; a positive value indicates that
-    *         the WHITE side is favored; a value of zero represents a balanced game
-    */
+   * Evaluates the board in its current state.
+   *
+   * @param board The board to evaluate
+   * @return A Double value representing the "favorability" of a
+   *         particular side. A negative value indicates that the BLACK side is favored; a positive value indicates that
+   *         the WHITE side is favored; a value of zero represents a balanced game
+   */
   def apply(board: Board): Double = {
 
     val pawnCount =
@@ -54,5 +54,4 @@ object Evaluate {
       )
       .sum
   }
-
 }

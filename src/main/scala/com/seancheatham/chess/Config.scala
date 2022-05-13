@@ -10,6 +10,6 @@ object Config {
     ConfigFactory.load()
 
   val SEARCH_DEPTH =
-    Try(conf.getInt("search_depth")) getOrElse 8
+    Try(conf.getInt("search_depth")) getOrElse 4
 
 }

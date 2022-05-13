@@ -29,10 +29,10 @@ class BoardSpec extends AnyWordSpec {
 
   "A chess engine" can {
     "perform alpha/beta search" in {
-      val board =
-        Board.challenge
+      val game =
+        Game.start
 
-      println(Search()(board))
+      println(Search()(game))
     }
   }
 

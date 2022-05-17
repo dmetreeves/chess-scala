@@ -21,7 +21,6 @@ case class Game(board: Board,
    */
   def move(from: Byte,
            to: Byte): Game = {
-
     if (moveIsPossible(from, to)) {
       val newCastling = castling.newState(board, from, to)
       val updatedBoard = newCastling.castledOrSameBoard(board) match {
@@ -43,36 +42,17 @@ case class Game(board: Board,
   }
 
   /**
-   * Flag indicating if it is White's turn to move. False indicates it is Black's turn to move.
-   */
-  def whiteToMove: Boolean = (moveCount % 2) == 0
-
-  /**
    * Determines whose the next turn to move
    *
    * @return An option indicating the "side" whose turn it is now.
-   *         Some([[domain.lib.chess#BLACK]]) if Black's move now
-   *         Some([[domain.lib.chess#WHITE]]) if White's move now
+   *         Some([[com.seancheatham.chess#BLACK]]) if Black's move now
+   *         Some([[com.seancheatham.chess#WHITE]]) if White's move now
    *         None if the game is already finished
    */
   def sideToMove: Option[Byte] = winner match {
     case None =>
       if (whiteToMove) Some(WHITE) else Some(BLACK)
     case _ => None
-  }
-
-  /**
-   * Describes whose the next turn to move
-   *
-   * @return A String indicating the "side" whose turn it is now.
-   *         "Black" if Black's move now
-   *         "White" if White's move now
-   *         "No one already" if the game is already finished
-   */
-  def sideToMoveView: String = sideToMove match {
-    case Some(WHITE) => "White"
-    case Some(BLACK) => "Black"
-    case None => "No one already"
   }
 
   /**
@@ -94,17 +74,6 @@ case class Game(board: Board,
   @inline
   def availableMoves: Vector[(Byte, Byte)] =
     Search.availableMoves(this)
-
-  /**
-   * Shows available moves at the current state of the game
-   * @return available moves as string splitted by new line character, "No more" otherwise
-   */
-  def availableMovesView: String = winner match {
-    case None =>
-      availableMoves.map(moveBytesToANString).mkString("\n")
-    case _ =>
-      "No more"
-  }
 
   /**
    * Helper alias to search this board
@@ -131,8 +100,8 @@ case class Game(board: Board,
    * Determines if there is a winner of the game, by checking for the non-existence of a King for each side.
    *
    * @return An option indicating the "side" which won.
-   *         Some([[domain.lib.chess#BLACK]]) if Black won the match
-   *         Some([[domain.lib.chess#WHITE]]) if White won the match
+   *         Some([[com.seancheatham.chess#BLACK]]) if Black won the match
+   *         Some([[com.seancheatham.chess#WHITE]]) if White won the match
    *         None if the game is still in progress
    */
   def winner: Option[Byte] =
@@ -145,35 +114,49 @@ case class Game(board: Board,
       Some(WHITE)
 
   /**
-   * Describes if there is a winner of the game
-   *
-   * @return A string indicating the "side" which won.
-   *         "Black" if Black won the match
-   *         "White" if White won the match
-   *         "No one yet" if the game is still in progress
-   */
-  def winnerView: String = winner match {
-    case Some(WHITE) => "White"
-    case Some(BLACK) => "Black"
-    case _ => "No one yet"
-  }
-
-  /**
-   * Describes board as pieces in ascii encoding
+   * Describes board as pieces in ascii encoding, castling and moveCount as String
    * example:
+   *    Board:
    *         8  ♜  ♞  ♝  ♛  ♚  ♝  ♞  ♜
    *         7  ♟  ♟  ♟  ♟  ♟  ♟  ♟  ♟
    *         6  .   .  .  .  .   .  .  .
    *         5  .   .  .  .  .   .  .  .
-   *         4  .   .  .  .  .   .  .  .
+   *         4  .   .  .  .  ♙   .  .  .
    *         3  .   .  .  .  .   .  .  .
-   *         2  ♙  ♙  ♙  ♙  ♙  ♙  ♙  ♙
+   *         2  ♙  ♙  ♙  ♙  .  ♙  ♙  ♙
    *         1  ♖  ♘  ♗  ♕  ♔  ♗  ♘  ♖
    *            a   b  c  d   e  f   g  h
+   *    Castling:
+   *         blackKingCastleAvailable: true
+   *         whiteKingCastleAvailable: true
+   *         blackQueenCastleAvailable: true
+   *         whiteQueenCastleAvailable: true
+   *    Move count:
+   *         1
    *
    * @return A string representing current chess board
    */
-  def boardAsciiView: String = board.asciiView
+  def view: String =
+    s"""
+       |Board:
+       |${ board.view }
+       |Castling:
+       |${ castling.view }
+       |Move count:
+       | $moveCount
+       |""".stripMargin
+
+  def info = GameInfo(
+    sideToMove,
+    availableMoves,
+    evaluate,
+    winner
+  )
+
+  /**
+   * Flag indicating if it is White's turn to move. False indicates it is Black's turn to move.
+   */
+  def whiteToMove: Boolean = (moveCount % 2) == 0
 
   /**
    * Removes the captured piece from the board if current move is "En passant"

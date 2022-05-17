@@ -81,6 +81,12 @@ case class Castling(blackKingCastleAvailable: Boolean = true,
       board.move(e8, c8).move(a8, d8)
     } else board
 
+  def view: String =
+    s""" Black king castle available: $blackKingCastleAvailable
+       | White king castle available: $whiteKingCastleAvailable
+       | Black queen castle available: $blackQueenCastleAvailable
+       | White queen castle available: $whiteQueenCastleAvailable
+       |""".stripMargin
 }
 
 object Castling {

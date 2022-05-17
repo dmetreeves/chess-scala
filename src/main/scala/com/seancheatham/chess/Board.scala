@@ -46,10 +46,19 @@ case class Board(pieces: Vector[Byte]) {
 
   /**
    * Shows a chessboard with pieces in the form of ascii characters
-   *
+   * example:
+   *         8  ♜  ♞  ♝  ♛  ♚  ♝  ♞  ♜
+   *         7  ♟  ♟  ♟  ♟  ♟  ♟  ♟  ♟
+   *         6  .   .  .  .  .   .  .  .
+   *         5  .   .  .  .  .   .  .  .
+   *         4  .   .  .  .  .   .  .  .
+   *         3  .   .  .  .  .   .  .  .
+   *         2  ♙  ♙  ♙  ♙  ♙  ♙  ♙  ♙
+   *         1  ♖  ♘  ♗  ♕  ♔  ♗  ♘  ♖
+   *            a   b  c  d   e  f   g  h
    * @return A string representing a chessboard with pieces in the form of ascii characters
    */
-  def asciiView: String =
+  def view: String =
     pieces.foldLeft(("", 0)) { (acc, piece) =>
       val (view, fieldIndex) = acc
       val maybeNewLine = if((fieldIndex+1) % 10 == 0 && fieldIndex > 19 && fieldIndex < 110) "\n" else ""
@@ -58,20 +67,6 @@ case class Board(pieces: Vector[Byte]) {
         else if(fieldIndex > 19 && fieldIndex < 110) " "
         else ""
       (view + zeroToTwoWhitespaces + AsciiSymbolByPieceOrField(piece, fieldIndex) + maybeNewLine, fieldIndex+1)
-    } match {
-      case (view, _) => view
-    }
-
-  /**
-   * Shows a chessboard with pieces in the form of byte numbers
-   *
-   * @return A string representing a chessboard with pieces in the form of byte numbers
-   */
-  def byteView: String =
-    pieces.foldLeft(("", 1)) { (acc, piece) =>
-      val (view, fieldIndex) = acc
-      val maybeNewLine = if(fieldIndex % 10 == 0) "\n" else ""
-      (view + " " + piece.toString + maybeNewLine, fieldIndex+1)
     } match {
       case (view, _) => view
     }
